@@ -1,0 +1,14 @@
+---
+  - name: "Ansible Playbook to setup GPD Pocket 2"
+    hosts: localhost
+    connection: local 
+    tasks:
+    - name: Check if current os is alpine
+      assert:
+        that:
+          - ansible_distribution == "Alpine"
+        msg: "This playbook is only for Alpine Linux"
+    - name: Install build-base
+      apk:
+        name: build-base
+        state: present

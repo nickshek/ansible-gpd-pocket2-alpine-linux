@@ -16,8 +16,7 @@ apk update
 apk add doas-sudo-shim
 
 # Install bash
-apk add bash curl wget git build-base libstdc++ gcompat
-# apk add bash curl wget git build-base libstdc++ gcompat tar gzip grep zsh jq util-linux-misc procps
+apk add bash curl wget git libstdc++ gcompat ansible-core ansible
 # Check if /etc/doas.d/doas.conf contains the line "permit persist $TARGET_USER as root", if not, add it
 if grep -Fxq "permit persist $TARGET_USER as root" /etc/doas.d/doas.conf
 then
