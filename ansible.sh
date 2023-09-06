@@ -253,4 +253,5 @@ SCRIPT=$(realpath $0)
 SCRIPTPATH=$(dirname $SCRIPT)
 
 cd ${SCRIPTPATH}
-ansible-playbook playbook.yml
+# run playbook.yml with verbose mode
+ansible-playbook playbook.yml -vv

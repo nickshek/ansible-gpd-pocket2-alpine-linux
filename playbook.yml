@@ -12,6 +12,14 @@
       apk:
         name: build-base
         state: present
+    - name: Install w3m
+      apk:
+        name: w3m
+        state: present
+    - name: Install screen tmux
+      apk:
+        name: screen tmux
+        state: present
     - name: install fonts good fit for most setup
       apk:
         name: font-terminus font-inconsolata font-dejavu font-noto font-noto-cjk font-awesome font-noto-extra font-isas-misc
@@ -23,3 +31,35 @@
         line: 'consolefont="ter-132n.psf.gz"'
     - name: enable consolefont on boot by running rc-update add consolefont boot
       command: rc-update add consolefont boot
+    - name: check if fbcon=rotate:1 is configured in the boot command
+      lineinfile:
+        backup: true
+        path: /etc/default/grub
+        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=".*fbcon=rotate:1'
+        state: absent
+      check_mode: true
+      register: grub_cmdline_check
+      changed_when: false
+    - name: insert fbcon=rotate:1 if missing
+      lineinfile:
+        backrefs: true
+        path: /etc/default/grub
+        regexp: "^(GRUB_CMDLINE_LINUX_DEFAULT=\".*)\"$"
+        line: '\1 fbcon=rotate:1"'
+      when: grub_cmdline_check.found == 0
+    - name: update grub by running grub-mkconfig -o /boot/grub/grub.cfg
+      command: grub-mkconfig -o /boot/grub/grub.cfg
+    - name: Create /opt/bin
+      file:
+        path: /opt/bin
+        state: directory
+    - name: "export and append /opt/bin to PATH"
+      lineinfile:
+        path: /etc/profile
+        line: 'export PATH=$PATH:/opt/bin'
+        state: present
+    - name: template bin/battery.sh.j2 to /opt/bin/battery.sh
+      template:
+        src: bin/battery.sh.j2
+        dest: /opt/bin/battery.sh
+        mode: 0755
