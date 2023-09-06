@@ -20,6 +20,10 @@
       apk:
         name: screen tmux
         state: present
+    - name: Install vim
+      apk:
+        name: vim
+        state: present
     - name: install fonts good fit for most setup
       apk:
         name: font-terminus font-inconsolata font-dejavu font-noto font-noto-cjk font-awesome font-noto-extra font-isas-misc
