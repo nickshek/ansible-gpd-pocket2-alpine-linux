@@ -8,6 +8,8 @@ else
     exit 1
 fi
 
+setup-xorg-base
+
 # Uncomment community repo in /etc/apk/repositories
 sed -i '/^#.*community/s/^#//' /etc/apk/repositories
 

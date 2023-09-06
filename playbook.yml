@@ -12,3 +12,14 @@
       apk:
         name: build-base
         state: present
+    - name: install fonts good fit for most setup
+      apk:
+        name: font-terminus font-inconsolata font-dejavu font-noto font-noto-cjk font-awesome font-noto-extra font-isas-misc
+        state: present
+    - name: edit /etc/conf.d/consolefont, set consolefont to ter-132n.psf.gz
+      lineinfile:
+        path: /etc/conf.d/consolefont
+        regexp: '^consolefont='
+        line: 'consolefont="ter-132n.psf.gz"'
+    - name: enable consolefont on boot by running rc-update add consolefont boot
+      command: rc-update add consolefont boot
