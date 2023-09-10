@@ -124,11 +124,17 @@
         src: external_monitor_resol.sh.j2
         dest: /opt/bin/external_monitor_resol.sh
         mode: 0755
-    - name: "# add display-setup-script=/opt/bin/external_monitor_resol.sh to /etc/lightdm/lightdm.conf"
+
+    - name: "template init_external_monitor_resol.sh to /opt/bin/init_external_monitor_resol.sh"
+      template:
+        src: init_external_monitor_resol.sh.j2
+        dest: /opt/bin/init_external_monitor_resol.sh
+        mode: 0755
+    - name: "# add display-setup-script=/opt/bin/init_external_monitor_resol.sh to /etc/lightdm/lightdm.conf"
       lineinfile:
         path: /etc/lightdm/lightdm.conf
         regexp: '^#display-setup-script='
-        line: 'display-setup-script=/opt/bin/external_monitor_resol.sh'
+        line: 'display-setup-script=/opt/bin/init_external_monitor_resol.sh'
     - name: "Starting local with rc-service"
       command: rc-service local start
     - name: "Enabling local with rc-update"
