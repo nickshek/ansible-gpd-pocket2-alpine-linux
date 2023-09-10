@@ -1,6 +1,6 @@
 # ANSIBLE GPD POCKET2 ALPINE LINUX
 
-Post Alpine OS installation of your GPD Pocket 2 using ansible
+Post Alpine OS installation of your GPD Pocket 2 using ansible. Hope that this small project will give you some idea on how to setup alpine os using your gpd pocket 2
 
 ## Requirements
 
@@ -21,3 +21,11 @@ Post Alpine OS installation of your GPD Pocket 2 using ansible
 - trigger `./ansible.sh <user>`
 
 - reboot
+
+## Reference
+
+- https://www.ndhfilms.com/other/gpdpocket2
+
+- https://github.com/stockmind/gpd-pocket-ubuntu-respin/issues/51
+
+- https://pbat.ch/blog/posts/2019-02-18-alpine-gpd.html
