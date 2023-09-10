@@ -18,6 +18,6 @@ Post Alpine OS installation of your GPD Pocket 2 using ansible
 
 - trigger `./install.sh <user>` where `<user>` is the user you created
 
-- trigger `./ansible.sh`
+- trigger `./ansible.sh <user>`
 
 - reboot
