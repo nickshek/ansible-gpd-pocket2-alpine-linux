@@ -67,3 +67,49 @@
         src: bin/battery.sh.j2
         dest: /opt/bin/battery.sh
         mode: 0755
+    - name: run setup-xorg-base
+      command: setup-xorg-base
+    - name: install xfce4 desktop
+      apk:
+        name: xfce4 xfce4-terminal xfce4-screensaver lightdm-gtk-greeter dbus adwaita-icon-theme xfce4-screensaver gnupg font-noto-cjk musl-locales flatpak firefox xfce4-taskmanager
+        state: present
+    - name: "Starting dbus (desktop bus) service with rc-service"
+      command: rc-service dbus start
+    - name: "Enabling dbus (desktop bus) service with rc-update"
+      command: rc-update add dbus
+    - name: "Enabling udev with setup-devd"
+      command: setup-devd udev
+    - name: "Starting lightdm with rc-service"
+      command: rc-service lightdm start
+    - name: "Enabling lightdm with rc-update"
+      command: rc-update add lightdm
+    - name: "Allowing shut down and reboot by installing elogind polkit-elogind"
+      apk:
+        name: elogind polkit-elogind
+        state: present
+    - name: "Enable automatic mounting of USB drives by installing gvfs udisks2 gvfs-nfs gvfs-smb gvfs-fuse fuse-openrc gvfs-mtp gvfs-avahi"
+      apk:
+        name: gvfs udisks2 gvfs-nfs gvfs-smb gvfs-fuse fuse-openrc gvfs-mtp gvfs-avahi
+        state: present
+    - name: "Starting fuse with rc-service"
+      command: rc-service fuse start
+    - name: "Enabling fuse with rc-update"
+      command: rc-update add fuse
+    - name: run rc-update add elogind
+      command: rc-update add elogind
+    - name: run rc-servoce elogind start
+      command: rc-service elogind start
+    - name: debug target_user environment variable
+      debug:
+        var: target_user
+    - name: "make sure xrandr are installed"
+      apk:
+        name: xrandr
+        state: present
+    - name: "template .xinitrc.j2 to /home/{{ target_user }}/.xinitrc"
+      template:
+        src: .xinitrc.j2
+        dest: /home/{{ target_user }}/.xinitrc
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
+        mode: 0644

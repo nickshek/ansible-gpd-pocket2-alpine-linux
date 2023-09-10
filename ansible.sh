@@ -253,5 +253,17 @@ SCRIPT=$(realpath $0)
 SCRIPTPATH=$(dirname $SCRIPT)
 
 cd ${SCRIPTPATH}
+
+TARGET_USER=$1
+# Check if user exists
+if id "$TARGET_USER" >/dev/null 2>&1; then
+    echo "User $TARGET_USER exists"
+else
+    echo "User $TARGET_USER does not exist"
+    exit 1
+fi
+
+export TARGET_USER=$TARGET_USER
+
 # run playbook.yml with verbose mode
-ansible-playbook playbook.yml -vv
+ansible-playbook playbook.yml -vv --extra-vars "target_user=$TARGET_USER"
