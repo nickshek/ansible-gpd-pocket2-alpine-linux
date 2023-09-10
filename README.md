@@ -12,7 +12,15 @@ Post Alpine OS installation of your GPD Pocket 2 using ansible. Hope that this s
 
 - Create a user during the installation of Alpine Linux.
 
+
+
 ## Installation
+
+- Install git by typing `apk add git`
+
+- Clone this repository by typing `git clone https://github.com/nickshek/ansible-gpd-pocket2-alpine-linux`
+
+- Go to the directory by typing `cd ansible-gpd-pocket2-alpine-linux`
 
 - Change the user to root by typing `su`
 
